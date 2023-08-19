@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Core.Extensions;
+using TwitterBot.Commands;
 using TwitterBot.Events;
 
 namespace TwitterBot
@@ -24,11 +25,13 @@ namespace TwitterBot
             // Construtor do client
             var clientTwitter = new TwitterClient(TWITTER_OAUTH2_CLIENT_ID, TWITTER_OAUTH2_CLIENT_SECRET, TWITTER_OAUTH2_ACCESS_TOKEN, TWITTER_OAUTH2_REFRESH_TOKEN);
 
-            // Chama o evento criado para pegar o usuario autenticado
-            Task<Tweetinvi.Models.IAuthenticatedUser> user = new UserLoggedEvent(clientTwitter).GetUser();
+            var tweetCommand = new TweetCommand(clientTwitter);
 
-            // Printa no console o usuario.
-            Console.WriteLine("Seu usuário é: " + user.Result.ScreenName);
+            /*
+            tweetCommand.Send("Hello World!"); -> Retorna o Tweet enviado
+
+            tweetCommand.Get(30); -> Retorna o conteudo do Tweet pesquisado
+            */
         }
     }
 }
